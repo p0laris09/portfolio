@@ -1,0 +1,24 @@
+{
+  "name": "mellow",
+  "description": "Include Bootstrap's source Sass and individual JavaScript plugins with Mellow.",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "stackblitz": {
+    "startCommand": "npm start"
+  },
+  "devDependencies": {
+    "sass": "^1.54.8"
+  },
+  "dependencies": {
+    "apexcharts": "^3.37.0",
+    "bad-words": "^4.0.0",
+    "bootstrap": "^5.2.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "firebase": "^11.2.0",
+    "firebase-admin": "^13.2.0",
+    "http-proxy-middleware": "^3.0.3",
+    "jquery": "^3.6.3"
+  }
+}

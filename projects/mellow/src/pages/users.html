@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Users - Mellow Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/mellow.png" />
+  <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/themify-icons/0.1.2/css/themify-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    .demo-banner {
+      background: linear-gradient(135deg, #5D87FF 0%, #49BEFF 100%);
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .demo-banner i { margin-right: 8px; }
+    .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; }
+    .status-active { background: #d4edda; color: #155724; }
+    .status-inactive { background: #f8d7da; color: #721c24; }
+    .pagination-info { display: flex; align-items: center; gap: 10px; }
+    .table-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+    .search-box { max-width: 300px; }
+    .export-buttons { display: flex; gap: 10px; }
+    .clickable-row { cursor: pointer; }
+    .clickable-row:hover { background-color: #f8f9fa; }
+  </style>
+</head>
+
+<body>
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    <i class="bi bi-info-circle"></i>
+    <strong>Demo Mode:</strong> This is a frontend demonstration with sample data.
+  </div>
+
+  <!-- Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="../assets/images/logos/MELLOW.svg" width="180" alt="Mellow Logo" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i><span class="hide-menu">Home</span></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./index.html"><i class="ti ti-layout-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
+            <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i><span class="hide-menu">Management</span></li>
+            <li class="sidebar-item"><a class="sidebar-link active" href="./users.html"><i class="ti ti-user"></i><span class="hide-menu">Users</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./college.html"><i class="ti ti-school"></i><span class="hide-menu">Colleges</span></a></li>
+            <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i><span class="hide-menu">Reports</span></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./feedbacks.html"><i class="ti ti-article"></i><span class="hide-menu">Feedbacks</span></a></li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <!-- Sidebar End -->
+
+    <!-- Main Content -->
+    <div class="body-wrapper">
+      <!-- Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="../assets/images/profile/mellow_profile.png" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="../auth/index.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Header End -->
+
+      <!-- Page Content -->
+      <div class="container-fluid">
+        <div class="row mb-3">
+          <div class="col-12">
+            <h1 class="my-4">User Management</h1>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <!-- Table Controls -->
+            <div class="table-controls">
+              <div class="d-flex align-items-center gap-3">
+                <input type="text" id="searchInput" class="form-control search-box" placeholder="Search users...">
+                <select id="statusFilter" class="form-select" style="width: auto;">
+                  <option value="">All Status</option>
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+                <select id="sortBy" class="form-select" style="width: auto;">
+                  <option value="name-asc">Name (A-Z)</option>
+                  <option value="name-desc">Name (Z-A)</option>
+                  <option value="email-asc">Email (A-Z)</option>
+                  <option value="email-desc">Email (Z-A)</option>
+                  <option value="regDate-desc">Newest First</option>
+                  <option value="regDate-asc">Oldest First</option>
+                  <option value="lastLogin-desc">Last Login (Recent)</option>
+                  <option value="lastLogin-asc">Last Login (Oldest)</option>
+                </select>
+              </div>
+              <div class="export-buttons">
+                <button class="btn btn-outline-success" onclick="exportToCSV()">
+                  <i class="bi bi-file-earmark-spreadsheet"></i> Export CSV
+                </button>
+                <button class="btn btn-outline-primary" onclick="exportToExcel()">
+                  <i class="bi bi-file-earmark-excel"></i> Export Excel
+                </button>
+              </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="table-responsive">
+              <table class="table table-hover" id="usersTable">
+                <thead class="table-light">
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>College</th>
+                    <th>Program</th>
+                    <th>Status</th>
+                    <th>Registered</th>
+                    <th>Last Login</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableBody"></tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div class="pagination-info">
+                <span>Rows per page:</span>
+                <select id="rowsPerPage" class="form-select form-select-sm" style="width: auto;">
+                  <option value="5">5</option>
+                  <option value="10" selected>10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+                <span id="showingInfo"></span>
+              </div>
+              <nav>
+                <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Details Modal -->
+  <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">User Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="userModalBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+
+  <script>
+    // Extended Users Data
+    const usersData = [
+      { id: 1, name: "Maria Santos", email: "maria.santos@umak.edu.ph", status: "Active", regDate: "2026-01-15", lastLogin: "2026-01-20", college: "College of Computer Studies", program: "BS Information Technology", tasks: 45, spaces: 3 },
+      { id: 2, name: "Juan Dela Cruz", email: "jdelacruz@umak.edu.ph", status: "Active", regDate: "2026-01-12", lastLogin: "2026-01-19", college: "College of Computer Studies", program: "BS Computer Science", tasks: 38, spaces: 2 },
+      { id: 3, name: "Ana Reyes", email: "ana.reyes@umak.edu.ph", status: "Active", regDate: "2026-01-10", lastLogin: "2026-01-18", college: "College of Business Administration", program: "BS Accountancy", tasks: 52, spaces: 4 },
+      { id: 4, name: "Carlos Garcia", email: "c.garcia@umak.edu.ph", status: "Inactive", regDate: "2025-12-20", lastLogin: "2025-12-25", college: "College of Engineering", program: "BS Electrical Engineering", tasks: 15, spaces: 1 },
+      { id: 5, name: "Sofia Martinez", email: "s.martinez@umak.edu.ph", status: "Active", regDate: "2025-12-18", lastLogin: "2026-01-20", college: "College of Arts and Sciences", program: "BA Communication", tasks: 67, spaces: 5 },
+      { id: 6, name: "Miguel Torres", email: "m.torres@umak.edu.ph", status: "Active", regDate: "2025-12-15", lastLogin: "2026-01-19", college: "College of Computer Studies", program: "BS Information Technology", tasks: 29, spaces: 2 },
+      { id: 7, name: "Patricia Lim", email: "p.lim@umak.edu.ph", status: "Inactive", regDate: "2025-12-10", lastLogin: "2026-01-05", college: "College of Education", program: "Bachelor of Elementary Education", tasks: 8, spaces: 1 },
+      { id: 8, name: "David Mendoza", email: "d.mendoza@umak.edu.ph", status: "Active", regDate: "2025-12-08", lastLogin: "2026-01-20", college: "College of Business Administration", program: "BS Business Administration", tasks: 41, spaces: 3 },
+      { id: 9, name: "Ella Rodriguez", email: "e.rodriguez@umak.edu.ph", status: "Active", regDate: "2025-12-05", lastLogin: "2026-01-18", college: "College of Computer Studies", program: "BS Computer Science", tasks: 55, spaces: 4 },
+      { id: 10, name: "Roberto Cruz", email: "r.cruz@umak.edu.ph", status: "Active", regDate: "2025-12-01", lastLogin: "2026-01-17", college: "College of Engineering", program: "BS Mechanical Engineering", tasks: 33, spaces: 2 },
+      { id: 11, name: "Isabela Fernandez", email: "i.fernandez@umak.edu.ph", status: "Active", regDate: "2025-11-28", lastLogin: "2026-01-16", college: "College of Arts and Sciences", program: "BS Psychology", tasks: 48, spaces: 3 },
+      { id: 12, name: "Marco Villanueva", email: "m.villanueva@umak.edu.ph", status: "Inactive", regDate: "2025-11-25", lastLogin: "2025-12-15", college: "College of Computer Studies", program: "BS Information Technology", tasks: 12, spaces: 1 },
+      { id: 13, name: "Bianca Tan", email: "b.tan@umak.edu.ph", status: "Active", regDate: "2025-11-22", lastLogin: "2026-01-20", college: "College of Nursing", program: "BS Nursing", tasks: 62, spaces: 4 },
+      { id: 14, name: "Rafael Santos", email: "r.santos@umak.edu.ph", status: "Active", regDate: "2025-11-20", lastLogin: "2026-01-19", college: "College of Business Administration", program: "BS Accountancy", tasks: 37, spaces: 2 },
+      { id: 15, name: "Carmen Reyes", email: "c.reyes@umak.edu.ph", status: "Active", regDate: "2025-11-18", lastLogin: "2026-01-18", college: "College of Computer Studies", program: "BS Computer Science", tasks: 44, spaces: 3 },
+      { id: 16, name: "Antonio Lopez", email: "a.lopez@umak.edu.ph", status: "Inactive", regDate: "2025-11-15", lastLogin: "2025-12-20", college: "College of Engineering", program: "BS Civil Engineering", tasks: 18, spaces: 1 },
+      { id: 17, name: "Lucia Gonzales", email: "l.gonzales@umak.edu.ph", status: "Active", regDate: "2025-11-12", lastLogin: "2026-01-17", college: "College of Education", program: "Bachelor of Secondary Education", tasks: 51, spaces: 3 },
+      { id: 18, name: "Fernando Ramos", email: "f.ramos@umak.edu.ph", status: "Active", regDate: "2025-11-10", lastLogin: "2026-01-16", college: "College of Arts and Sciences", program: "BA Political Science", tasks: 28, spaces: 2 },
+      { id: 19, name: "Gloria Castro", email: "g.castro@umak.edu.ph", status: "Active", regDate: "2025-11-08", lastLogin: "2026-01-15", college: "College of Computer Studies", program: "BS Information Technology", tasks: 59, spaces: 4 },
+      { id: 20, name: "Eduardo Navarro", email: "e.navarro@umak.edu.ph", status: "Inactive", regDate: "2025-11-05", lastLogin: "2025-12-10", college: "College of Business Administration", program: "BS Marketing Management", tasks: 9, spaces: 1 },
+      { id: 21, name: "Rosa Mendez", email: "r.mendez@umak.edu.ph", status: "Active", regDate: "2025-11-02", lastLogin: "2026-01-14", college: "College of Nursing", program: "BS Nursing", tasks: 42, spaces: 3 },
+      { id: 22, name: "Pablo Aquino", email: "p.aquino@umak.edu.ph", status: "Active", regDate: "2025-10-30", lastLogin: "2026-01-13", college: "College of Engineering", program: "BS Electronics Engineering", tasks: 35, spaces: 2 },
+      { id: 23, name: "Diana Reyes", email: "d.reyes@umak.edu.ph", status: "Active", regDate: "2025-10-28", lastLogin: "2026-01-12", college: "College of Computer Studies", program: "BS Computer Science", tasks: 58, spaces: 4 },
+      { id: 24, name: "Luis Bautista", email: "l.bautista@umak.edu.ph", status: "Active", regDate: "2025-10-25", lastLogin: "2026-01-11", college: "College of Arts and Sciences", program: "BS Biology", tasks: 31, spaces: 2 },
+      { id: 25, name: "Teresa Morales", email: "t.morales@umak.edu.ph", status: "Inactive", regDate: "2025-10-22", lastLogin: "2025-11-30", college: "College of Education", program: "Bachelor of Elementary Education", tasks: 6, spaces: 1 }
+    ];
+
+    let filteredData = [...usersData];
+    let currentPage = 1;
+
+    // Event Listeners
+    document.getElementById('searchInput').addEventListener('input', () => { currentPage = 1; filterAndSort(); });
+    document.getElementById('statusFilter').addEventListener('change', () => { currentPage = 1; filterAndSort(); });
+    document.getElementById('sortBy').addEventListener('change', filterAndSort);
+    document.getElementById('rowsPerPage').addEventListener('change', () => { currentPage = 1; renderTable(); });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', filterAndSort);
+
+    function filterAndSort() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const statusFilter = document.getElementById('statusFilter').value;
+      const sortBy = document.getElementById('sortBy').value;
+
+      // Filter
+      filteredData = usersData.filter(user => {
+        const matchSearch = user.name.toLowerCase().includes(searchTerm) || 
+                           user.email.toLowerCase().includes(searchTerm) ||
+                           user.college.toLowerCase().includes(searchTerm) ||
+                           user.program.toLowerCase().includes(searchTerm);
+        const matchStatus = !statusFilter || user.status === statusFilter;
+        return matchSearch && matchStatus;
+      });
+
+      // Sort
+      const [field, direction] = sortBy.split('-');
+      filteredData.sort((a, b) => {
+        let valA = a[field];
+        let valB = b[field];
+        
+        if (field === 'regDate' || field === 'lastLogin') {
+          valA = new Date(valA);
+          valB = new Date(valB);
+        } else {
+          valA = valA.toLowerCase();
+          valB = valB.toLowerCase();
+        }
+        
+        if (direction === 'asc') {
+          return valA > valB ? 1 : -1;
+        } else {
+          return valA < valB ? 1 : -1;
+        }
+      });
+
+      renderTable();
+    }
+
+    function renderTable() {
+      const rowsPerPage = parseInt(document.getElementById('rowsPerPage').value);
+      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      const start = (currentPage - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const pageData = filteredData.slice(start, end);
+
+      const tbody = document.getElementById('usersTableBody');
+      tbody.innerHTML = '';
+
+      pageData.forEach((user, index) => {
+        const row = document.createElement('tr');
+        row.className = 'clickable-row';
+        row.onclick = () => viewUser(user.id);
+        row.innerHTML = `
+          <td>${start + index + 1}</td>
+          <td><strong>${user.name}</strong></td>
+          <td>${user.email}</td>
+          <td>${user.college}</td>
+          <td>${user.program}</td>
+          <td><span class="status-badge status-${user.status.toLowerCase()}">${user.status}</span></td>
+          <td>${formatDate(user.regDate)}</td>
+          <td>${formatDate(user.lastLogin)}</td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      // Update showing info
+      document.getElementById('showingInfo').textContent = 
+        `Showing ${start + 1}-${Math.min(end, filteredData.length)} of ${filteredData.length}`;
+
+      // Render pagination
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      // Previous button
+      const prevLi = document.createElement('li');
+      prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+      prevLi.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage - 1}); return false;">Previous</a>`;
+      pagination.appendChild(prevLi);
+
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+          const li = document.createElement('li');
+          li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+          li.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${i}); return false;">${i}</a>`;
+          pagination.appendChild(li);
+        } else if (i === currentPage - 2 || i === currentPage + 2) {
+          const li = document.createElement('li');
+          li.className = 'page-item disabled';
+          li.innerHTML = '<span class="page-link">...</span>';
+          pagination.appendChild(li);
+        }
+      }
+
+      // Next button
+      const nextLi = document.createElement('li');
+      nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+      nextLi.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage + 1}); return false;">Next</a>`;
+      pagination.appendChild(nextLi);
+    }
+
+    function goToPage(page) {
+      const rowsPerPage = parseInt(document.getElementById('rowsPerPage').value);
+      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderTable();
+      }
+    }
+
+    function viewUser(userId) {
+      const user = usersData.find(u => u.id === userId);
+      if (!user) return;
+
+      const modalBody = document.getElementById('userModalBody');
+      modalBody.innerHTML = `
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="text-muted">Personal Information</h6>
+            <p><strong>Name:</strong> ${user.name}</p>
+            <p><strong>Email:</strong> ${user.email}</p>
+            <p><strong>Status:</strong> <span class="status-badge status-${user.status.toLowerCase()}">${user.status}</span></p>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-muted">Academic Information</h6>
+            <p><strong>College:</strong> ${user.college}</p>
+            <p><strong>Program:</strong> ${user.program}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="text-muted">Activity</h6>
+            <p><strong>Registered:</strong> ${formatDate(user.regDate)}</p>
+            <p><strong>Last Login:</strong> ${formatDate(user.lastLogin)}</p>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-muted">Statistics</h6>
+            <p><strong>Total Tasks:</strong> ${user.tasks}</p>
+            <p><strong>Total Spaces:</strong> ${user.spaces}</p>
+          </div>
+        </div>
+      `;
+
+      new bootstrap.Modal(document.getElementById('userModal')).show();
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function exportToCSV() {
+      const headers = ['Name', 'Email', 'College', 'Program', 'Status', 'Registered', 'Last Login'];
+      const rows = filteredData.map(user => [
+        user.name,
+        user.email,
+        user.college,
+        user.program,
+        user.status,
+        user.regDate,
+        user.lastLogin
+      ]);
+
+      let csvContent = headers.join(',') + '\n';
+      rows.forEach(row => {
+        csvContent += row.map(cell => `"${cell}"`).join(',') + '\n';
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'mellow_users.csv';
+      link.click();
+    }
+
+    function exportToExcel() {
+      const data = [
+        ['Name', 'Email', 'College', 'Program', 'Status', 'Registered', 'Last Login'],
+        ...filteredData.map(user => [
+          user.name,
+          user.email,
+          user.college,
+          user.program,
+          user.status,
+          user.regDate,
+          user.lastLogin
+        ])
+      ];
+
+      const ws = XLSX.utils.aoa_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Users');
+      XLSX.writeFile(wb, 'mellow_users.xlsx');
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Colleges - Mellow Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/mellow.png" />
+  <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/themify-icons/0.1.2/css/themify-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    .demo-banner {
+      background: linear-gradient(135deg, #5D87FF 0%, #49BEFF 100%);
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .demo-banner i { margin-right: 8px; }
+    .college-card { transition: all 0.3s ease; cursor: pointer; }
+    .college-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .program-list { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .program-list.expanded { max-height: 500px; }
+    .stats-badge { background: #e3f2fd; color: #1976d2; padding: 4px 10px; border-radius: 15px; font-size: 0.85rem; margin-right: 10px; }
+    .expand-icon { transition: transform 0.3s ease; }
+    .expanded .expand-icon { transform: rotate(180deg); }
+    .pagination-info { display: flex; align-items: center; gap: 10px; }
+    .table-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+    .search-box { max-width: 300px; }
+    .export-buttons { display: flex; gap: 10px; }
+  </style>
+</head>
+
+<body>
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    <i class="bi bi-info-circle"></i>
+    <strong>Demo Mode:</strong> This is a frontend demonstration with sample data.
+  </div>
+
+  <!-- Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="../assets/images/logos/MELLOW.svg" width="180" alt="Mellow Logo" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i><span class="hide-menu">Home</span></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./index.html"><i class="ti ti-layout-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
+            <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i><span class="hide-menu">Management</span></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./users.html"><i class="ti ti-user"></i><span class="hide-menu">Users</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link active" href="./college.html"><i class="ti ti-school"></i><span class="hide-menu">Colleges</span></a></li>
+            <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-4"></i><span class="hide-menu">Reports</span></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./feedbacks.html"><i class="ti ti-article"></i><span class="hide-menu">Feedbacks</span></a></li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <!-- Sidebar End -->
+
+    <!-- Main Content -->
+    <div class="body-wrapper">
+      <!-- Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="../assets/images/profile/mellow_profile.png" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="../auth/index.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Header End -->
+
+      <!-- Page Content -->
+      <div class="container-fluid">
+        <div class="row mb-3">
+          <div class="col-12">
+            <h1 class="my-4">College Management</h1>
+          </div>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <div class="card bg-primary text-white">
+              <div class="card-body text-center">
+                <h3 id="totalColleges">0</h3>
+                <p class="mb-0">Total Colleges</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-success text-white">
+              <div class="card-body text-center">
+                <h3 id="totalPrograms">0</h3>
+                <p class="mb-0">Total Programs</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-info text-white">
+              <div class="card-body text-center">
+                <h3 id="totalStudents">0</h3>
+                <p class="mb-0">Total Students</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+              <div class="card-body text-center">
+                <h3 id="avgStudents">0</h3>
+                <p class="mb-0">Avg Students/College</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <!-- Table Controls -->
+            <div class="table-controls">
+              <div class="d-flex align-items-center gap-3">
+                <input type="text" id="searchInput" class="form-control search-box" placeholder="Search colleges or programs...">
+                <select id="sortBy" class="form-select" style="width: auto;">
+                  <option value="name-asc">Name (A-Z)</option>
+                  <option value="name-desc">Name (Z-A)</option>
+                  <option value="students-desc">Most Students</option>
+                  <option value="students-asc">Least Students</option>
+                  <option value="programs-desc">Most Programs</option>
+                  <option value="programs-asc">Least Programs</option>
+                </select>
+              </div>
+              <div class="export-buttons">
+                <button class="btn btn-outline-secondary" onclick="toggleAllColleges()">
+                  <i class="bi bi-arrows-expand"></i> Expand All
+                </button>
+                <button class="btn btn-outline-success" onclick="exportToCSV()">
+                  <i class="bi bi-file-earmark-spreadsheet"></i> Export CSV
+                </button>
+                <button class="btn btn-outline-primary" onclick="exportToExcel()">
+                  <i class="bi bi-file-earmark-excel"></i> Export Excel
+                </button>
+              </div>
+            </div>
+
+            <!-- Colleges List -->
+            <div id="collegesList" class="row"></div>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div class="pagination-info">
+                <span>Rows per page:</span>
+                <select id="rowsPerPage" class="form-select form-select-sm" style="width: auto;">
+                  <option value="4">4</option>
+                  <option value="8" selected>8</option>
+                  <option value="12">12</option>
+                </select>
+                <span id="showingInfo"></span>
+              </div>
+              <nav>
+                <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+
+  <script>
+    // Colleges Data with Programs
+    const collegesData = [
+      {
+        id: 1,
+        name: "College of Computer Studies",
+        acronym: "CCS",
+        dean: "Dr. Maria Luisa Santos",
+        students: 856,
+        programs: [
+          { name: "BS Information Technology", students: 312 },
+          { name: "BS Computer Science", students: 287 },
+          { name: "BS Information Systems", students: 145 },
+          { name: "BS Entertainment and Multimedia Computing", students: 112 }
+        ]
+      },
+      {
+        id: 2,
+        name: "College of Business Administration",
+        acronym: "CBA",
+        dean: "Dr. Roberto Martinez",
+        students: 1245,
+        programs: [
+          { name: "BS Accountancy", students: 435 },
+          { name: "BS Business Administration", students: 389 },
+          { name: "BS Marketing Management", students: 245 },
+          { name: "BS Financial Management", students: 176 }
+        ]
+      },
+      {
+        id: 3,
+        name: "College of Engineering",
+        acronym: "COE",
+        dean: "Engr. Antonio Cruz",
+        students: 678,
+        programs: [
+          { name: "BS Electrical Engineering", students: 189 },
+          { name: "BS Mechanical Engineering", students: 178 },
+          { name: "BS Civil Engineering", students: 167 },
+          { name: "BS Electronics Engineering", students: 144 }
+        ]
+      },
+      {
+        id: 4,
+        name: "College of Education",
+        acronym: "CED",
+        dean: "Dr. Elena Fernandez",
+        students: 534,
+        programs: [
+          { name: "Bachelor of Elementary Education", students: 212 },
+          { name: "Bachelor of Secondary Education", students: 198 },
+          { name: "Bachelor of Physical Education", students: 124 }
+        ]
+      },
+      {
+        id: 5,
+        name: "College of Arts and Sciences",
+        acronym: "CAS",
+        dean: "Dr. Patricia Reyes",
+        students: 723,
+        programs: [
+          { name: "BA Communication", students: 234 },
+          { name: "BS Psychology", students: 198 },
+          { name: "BA Political Science", students: 156 },
+          { name: "BS Biology", students: 135 }
+        ]
+      },
+      {
+        id: 6,
+        name: "College of Nursing",
+        acronym: "CON",
+        dean: "Dr. Gloria Mendez",
+        students: 512,
+        programs: [
+          { name: "BS Nursing", students: 512 }
+        ]
+      },
+      {
+        id: 7,
+        name: "College of Law",
+        acronym: "COL",
+        dean: "Atty. Ricardo Del Rosario",
+        students: 234,
+        programs: [
+          { name: "Juris Doctor", students: 234 }
+        ]
+      },
+      {
+        id: 8,
+        name: "College of Tourism and Hospitality Management",
+        acronym: "CTHM",
+        dean: "Dr. Carmen Valencia",
+        students: 445,
+        programs: [
+          { name: "BS Tourism Management", students: 245 },
+          { name: "BS Hospitality Management", students: 200 }
+        ]
+      },
+      {
+        id: 9,
+        name: "College of Criminal Justice Education",
+        acronym: "CCJE",
+        dean: "Dr. Manuel Lopez",
+        students: 389,
+        programs: [
+          { name: "BS Criminology", students: 389 }
+        ]
+      },
+      {
+        id: 10,
+        name: "College of Architecture",
+        acronym: "COA",
+        dean: "Ar. Isabel Torres",
+        students: 267,
+        programs: [
+          { name: "BS Architecture", students: 267 }
+        ]
+      }
+    ];
+
+    let filteredData = [...collegesData];
+    let currentPage = 1;
+    let allExpanded = false;
+
+    // Event Listeners
+    document.getElementById('searchInput').addEventListener('input', () => { currentPage = 1; filterAndSort(); });
+    document.getElementById('sortBy').addEventListener('change', filterAndSort);
+    document.getElementById('rowsPerPage').addEventListener('change', () => { currentPage = 1; renderColleges(); });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      updateSummaryStats();
+      filterAndSort();
+    });
+
+    function updateSummaryStats() {
+      const totalColleges = collegesData.length;
+      const totalPrograms = collegesData.reduce((sum, c) => sum + c.programs.length, 0);
+      const totalStudents = collegesData.reduce((sum, c) => sum + c.students, 0);
+      const avgStudents = Math.round(totalStudents / totalColleges);
+
+      document.getElementById('totalColleges').textContent = totalColleges;
+      document.getElementById('totalPrograms').textContent = totalPrograms;
+      document.getElementById('totalStudents').textContent = totalStudents.toLocaleString();
+      document.getElementById('avgStudents').textContent = avgStudents;
+    }
+
+    function filterAndSort() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const sortBy = document.getElementById('sortBy').value;
+
+      // Filter
+      filteredData = collegesData.filter(college => {
+        const matchCollege = college.name.toLowerCase().includes(searchTerm) || 
+                            college.acronym.toLowerCase().includes(searchTerm) ||
+                            college.dean.toLowerCase().includes(searchTerm);
+        const matchProgram = college.programs.some(p => p.name.toLowerCase().includes(searchTerm));
+        return matchCollege || matchProgram;
+      });
+
+      // Sort
+      const [field, direction] = sortBy.split('-');
+      filteredData.sort((a, b) => {
+        let valA, valB;
+        
+        if (field === 'name') {
+          valA = a.name.toLowerCase();
+          valB = b.name.toLowerCase();
+        } else if (field === 'students') {
+          valA = a.students;
+          valB = b.students;
+        } else if (field === 'programs') {
+          valA = a.programs.length;
+          valB = b.programs.length;
+        }
+        
+        if (direction === 'asc') {
+          return valA > valB ? 1 : -1;
+        } else {
+          return valA < valB ? 1 : -1;
+        }
+      });
+
+      renderColleges();
+    }
+
+    function renderColleges() {
+      const rowsPerPage = parseInt(document.getElementById('rowsPerPage').value);
+      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      const start = (currentPage - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const pageData = filteredData.slice(start, end);
+
+      const container = document.getElementById('collegesList');
+      container.innerHTML = '';
+
+      pageData.forEach((college) => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 mb-4';
+        col.innerHTML = `
+          <div class="card college-card h-100" onclick="toggleCollege(${college.id})">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h5 class="card-title mb-1">${college.name}</h5>
+                  <p class="text-muted mb-2">(${college.acronym})</p>
+                </div>
+                <i class="bi bi-chevron-down expand-icon" id="icon-${college.id}"></i>
+              </div>
+              <p class="mb-2"><small><strong>Dean:</strong> ${college.dean}</small></p>
+              <div class="mb-3">
+                <span class="stats-badge"><i class="bi bi-people"></i> ${college.students} Students</span>
+                <span class="stats-badge"><i class="bi bi-book"></i> ${college.programs.length} Programs</span>
+              </div>
+              <div class="program-list" id="programs-${college.id}">
+                <hr>
+                <h6>Programs:</h6>
+                <ul class="list-unstyled">
+                  ${college.programs.map(p => `
+                    <li class="d-flex justify-content-between py-1">
+                      <span>${p.name}</span>
+                      <span class="badge bg-secondary">${p.students}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(col);
+      });
+
+      // Update showing info
+      document.getElementById('showingInfo').textContent = 
+        `Showing ${start + 1}-${Math.min(end, filteredData.length)} of ${filteredData.length}`;
+
+      // Render pagination
+      renderPagination(totalPages);
+    }
+
+    function toggleCollege(collegeId) {
+      const programList = document.getElementById(`programs-${collegeId}`);
+      const icon = document.getElementById(`icon-${collegeId}`);
+      
+      if (programList) {
+        programList.classList.toggle('expanded');
+        icon.classList.toggle('bi-chevron-down');
+        icon.classList.toggle('bi-chevron-up');
+      }
+    }
+
+    function toggleAllColleges() {
+      allExpanded = !allExpanded;
+      filteredData.forEach(college => {
+        const programList = document.getElementById(`programs-${college.id}`);
+        const icon = document.getElementById(`icon-${college.id}`);
+        
+        if (programList) {
+          if (allExpanded) {
+            programList.classList.add('expanded');
+            icon.classList.remove('bi-chevron-down');
+            icon.classList.add('bi-chevron-up');
+          } else {
+            programList.classList.remove('expanded');
+            icon.classList.add('bi-chevron-down');
+            icon.classList.remove('bi-chevron-up');
+          }
+        }
+      });
+    }
+
+    function renderPagination(totalPages) {
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      // Previous button
+      const prevLi = document.createElement('li');
+      prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+      prevLi.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage - 1}); return false;">Previous</a>`;
+      pagination.appendChild(prevLi);
+
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement('li');
+        li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+        li.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${i}); return false;">${i}</a>`;
+        pagination.appendChild(li);
+      }
+
+      // Next button
+      const nextLi = document.createElement('li');
+      nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+      nextLi.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage + 1}); return false;">Next</a>`;
+      pagination.appendChild(nextLi);
+    }
+
+    function goToPage(page) {
+      const rowsPerPage = parseInt(document.getElementById('rowsPerPage').value);
+      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderColleges();
+      }
+    }
+
+    function exportToCSV() {
+      const headers = ['College', 'Acronym', 'Dean', 'Total Students', 'Programs'];
+      const rows = filteredData.map(college => [
+        college.name,
+        college.acronym,
+        college.dean,
+        college.students,
+        college.programs.map(p => p.name).join('; ')
+      ]);
+
+      let csvContent = headers.join(',') + '\n';
+      rows.forEach(row => {
+        csvContent += row.map(cell => `"${cell}"`).join(',') + '\n';
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'mellow_colleges.csv';
+      link.click();
+    }
+
+    function exportToExcel() {
+      const data = [
+        ['College', 'Acronym', 'Dean', 'Total Students', 'Programs'],
+        ...filteredData.map(college => [
+          college.name,
+          college.acronym,
+          college.dean,
+          college.students,
+          college.programs.map(p => p.name).join('; ')
+        ])
+      ];
+
+      const ws = XLSX.utils.aoa_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Colleges');
+      XLSX.writeFile(wb, 'mellow_colleges.xlsx');
+    }
+  </script>
+</body>
+
+</html>

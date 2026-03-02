@@ -1,0 +1,7 @@
+runtime: php83
+env: flex
+runtime_config:
+  document_root: .
+  enable_stackdriver_integration: true
+  php_extensions:
+    - grpc
