@@ -77,12 +77,12 @@
           <p>annelorraineramos@gmail.com</p>
           <span class="contact-info-action">Send Email <i class="bi bi-arrow-right"></i></span>
         </a>
-        <a href="tel:+639465420123" class="contact-info-card">
+        <a href="tel:+639466470371" class="contact-info-card">
           <div class="contact-info-icon">
             <i class="bi bi-telephone"></i>
           </div>
           <h4>Phone</h4>
-          <p>+63 (946) 542-0123</p>
+          <p>+63 (946) 647-0371</p>
           <span class="contact-info-action">Call Now <i class="bi bi-arrow-right"></i></span>
         </a>
         <div class="contact-info-card">

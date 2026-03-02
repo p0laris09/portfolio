@@ -267,8 +267,10 @@
               </div>
             </div>
             <div class="project-overlay">
-              <a href="#" class="overlay-btn"><i class="bi bi-arrow-up-right"></i></a>
-              <a href="#" class="overlay-btn ghost"><i class="bi bi-github"></i></a>
+              <a href="../projects/ravel/index.php" target="_blank" class="overlay-btn"><i
+                  class="bi bi-arrow-up-right"></i></a>
+              <a href="https://github.com/p0laris09/Ravel" target="_blank" class="overlay-btn ghost"><i
+                  class="bi bi-github"></i></a>
             </div>
           </div>
           <div class="project-info">
@@ -301,8 +303,7 @@
               </div>
             </div>
             <div class="project-overlay">
-              <a href="#" class="overlay-btn"><i class="bi bi-arrow-up-right"></i></a>
-              <a href="#" class="overlay-btn ghost"><i class="bi bi-github"></i></a>
+              <a href="projects.php#lifeline" class="overlay-btn"><i class="bi bi-images"></i></a>
             </div>
           </div>
           <div class="project-info">
@@ -340,8 +341,10 @@
               </div>
             </div>
             <div class="project-overlay">
-              <a href="#" class="overlay-btn"><i class="bi bi-arrow-up-right"></i></a>
-              <a href="#" class="overlay-btn ghost"><i class="bi bi-github"></i></a>
+              <a href="../projects/mellow/index.html" target="_blank" class="overlay-btn"><i
+                  class="bi bi-arrow-up-right"></i></a>
+              <a href="https://github.com/p0laris09/mellow-admin" target="_blank" class="overlay-btn ghost"><i
+                  class="bi bi-github"></i></a>
             </div>
           </div>
           <div class="project-info">

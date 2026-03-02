@@ -40,28 +40,9 @@ Welcome to my portfolio! I'm a passionate full-stack developer dedicated to crea
 
 ## Technologies Used
 
-### Frontend
-- HTML5 / CSS3
-- Bootstrap 5.3.2
-- JavaScript (Vanilla)
-- Flutter / Dart
-
-### Backend
-- PHP
-- Laravel
-- Node.js
-- Express.js
-
-### Databases
-- MySQL
-- MongoDB
-- Firebase
-
-### Tools & Services
-- Git / GitHub
-- Bootstrap Icons
-- Google Maps API
-- Stripe API
+- **Frontend**: HTML5, CSS3, Bootstrap 5.3.2, JavaScript, React.js, Flutter
+- **Backend**: PHP, Laravel, Node.js
+- **Tools**: Git, GitHub, Bootstrap Icons, Google Maps API, Stripe API
 
 ## Getting Started
 
@@ -86,17 +67,20 @@ portfolio-updated/
 │   ├── projects.php
 │   ├── certificates.php
 │   └── contact.php
+├── includes/
+│   ├── header.php
+│   └── footer.php
 ├── projects/
 │   ├── ravel/
 │   ├── hotel/
 │   ├── mellow/
 │   ├── ak/
 │   └── quiz me/
-├── assets/
-│   ├── images/
-│   ├── Mellow/
-│   ├── Lifeline/
-│   └── Caffeinate Me/
+└── assets/
+    ├── images/
+    ├── Mellow/
+    ├── Lifeline/
+    └── Caffeinate Me/
 ```
 
 ## Features Breakdown
@@ -127,17 +111,9 @@ portfolio-updated/
 - **Golden Accent**: #cbaa7a (Golden Light)
 - **Cream**: #e5d9c9 (Off-White)
 
-## Contact
-
-- **Email**: annelorraineramos@gmail.com
-- **Phone**: +63 (946) 542-0123
-- **Location**: Philippines
-- **LinkedIn**: [Anne Lorraine Ramos](https://www.linkedin.com/in/anne-lorraine-ramos-596b5b330/)
-- **GitHub**: [p0laris09](https://github.com/p0laris09)
-
 ## License
 
-&copy; 2025 Anne Lorraine Ramos. All rights reserved.
+&copy; 2026 Anne Lorraine Ramos. All rights reserved.
 
 ---
 
