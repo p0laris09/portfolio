@@ -16,7 +16,7 @@ const nav = [
       <div class="cluster">
         <a href="https://github.com/p0laris09" target="_blank" rel="noopener" aria-label="GitHub"><i class="pi pi-github" aria-hidden="true" /></a>
         <a href="https://www.linkedin.com/in/anne-lorraine-ramos-596b5b330/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="pi pi-linkedin" aria-hidden="true" /></a>
-        <a href="mailto:annelorraineramos@gmail.com" aria-label="Email"><i class="pi pi-envelope" aria-hidden="true" /></a>
+        <a href="mailto:annelorraineframos@gmail.com" aria-label="Email"><i class="pi pi-envelope" aria-hidden="true" /></a>
       </div>
     </div>
   </footer>

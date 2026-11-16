@@ -5,6 +5,7 @@ usePageSeo(
 )
 
 const NuxtLink = resolveComponent('NuxtLink')
+const projectUrl = useProjectUrl()
 
 interface Project {
   type: string
@@ -29,7 +30,7 @@ const years: Year[] = [
     projects: [
       {
         type: 'Mobile App', title: 'Lifeline', icon: 'pi-mobile', gallery: 'lifeline',
-        description: 'Personal safety and emergency assistance application with one-tap SOS activation, real-time location sharing, and emergency contact system.',
+        description: 'Personal safety and emergency assistance application with one-tap SOS activation, real-time location sharing, and emergency contact system. Personal project, currently in development.',
         tech: ['Flutter', 'Dart', 'Firebase', 'Google Maps API']
       }
     ]
@@ -40,7 +41,7 @@ const years: Year[] = [
       {
         type: 'Website', title: 'Ravel', icon: 'pi-globe', href: '/projects/ravel/index.php',
         description: 'Dynamic job search platform connecting job seekers with employers. Features advanced filtering, application tracking, and employer analytics dashboard.',
-        tech: ['PHP', 'Laravel', 'MySQL', 'Bootstrap']
+        tech: ['Laravel', 'Vue.js', 'MySQL']
       },
       {
         type: 'Mobile App', title: 'Caffeinate Me', icon: 'pi-shopping-bag', gallery: 'caffeinate',
@@ -60,7 +61,7 @@ const years: Year[] = [
       {
         type: 'Mobile App', title: 'Mellow', icon: 'pi-th-large', href: '/projects/mellow/index.html', gallery: 'mellow',
         description: 'Task management application with Kanban boards, smart reminders, team collaboration tools, and progress analytics.',
-        tech: ['React.js', 'Node.js', 'MongoDB', 'Socket.io']
+        tech: ['React.js', 'Node.js', 'Flutter', 'Dart', 'Firebase']
       }
     ]
   },
@@ -201,7 +202,7 @@ function setOpen(key: string, v: boolean) {
                       <Button
                         v-if="p.href"
                         as="a"
-                        :href="p.href"
+                        :href="projectUrl(p.href)"
                         target="_blank"
                         rel="noopener"
                         label="View Project"
@@ -257,7 +258,7 @@ function setOpen(key: string, v: boolean) {
   background: var(--surface-2); color: var(--primary); font-size: 1.25rem; flex: none;
 }
 .stat-info { display: flex; flex-direction: column; }
-.stat-num { font-family: var(--font-serif); font-size: var(--fs-2xl); font-weight: 700; color: var(--text); line-height: 1.1; }
+.stat-num { font-family: var(--font-num); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.02em; font-size: var(--fs-2xl); font-weight: 800; color: var(--text); line-height: 1.1; }
 
 .timeline { max-width: 60rem; margin-inline: auto; }
 .timeline :deep(.p-timeline-event-opposite) { display: none; }

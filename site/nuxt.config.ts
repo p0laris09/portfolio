@@ -33,12 +33,16 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/png', href: '/images/logo.png' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap' }
       ],
       script: [{ innerHTML: themeInit, tagPosition: 'head', tagPriority: 'critical' }]
     }
   },
-  runtimeConfig: { public: { siteUrl: process.env.NUXT_PUBLIC_SITE_URL || '' } },
-  nitro: { prerender: { crawlLinks: true, routes: ['/'] } },
+  runtimeConfig: { public: { siteUrl: process.env.NUXT_PUBLIC_SITE_URL || '', projectsUrl: process.env.NUXT_PUBLIC_PROJECTS_URL || '' } },
+  nitro: {
+    prerender: { crawlLinks: true, routes: ['/'] },
+    // Dev only: serve the legacy demo apps from XAMPP so /projects/... links work locally.
+    devProxy: { '/projects': { target: 'http://localhost/portfolio-updated/projects', changeOrigin: true } }
+  },
   devtools: { enabled: false }
 })

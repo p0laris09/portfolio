@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { YEARS_EXPERIENCE, PROJECTS_DONE, CERTIFICATIONS, technologyCount } from '~/data/profile'
+
 usePageSeo(
   'About - Anne Lorraine Ramos',
   'Passionate developer crafting digital experiences with code and creativity. Full Stack Developer based in the Philippines, BS Computer Science graduate and Dean\'s Lister from the University of Makati.'
@@ -11,32 +13,9 @@ const highlights = [
 ]
 
 const stats = [
-  { icon: 'pi-folder', value: 10, label: 'Projects Completed' },
-  { icon: 'pi-code', value: 18, label: 'Technologies Mastered' },
-  { icon: 'pi-trophy', value: 9, label: 'Certificates Earned' }
-]
-
-const skillGroups = [
-  { icon: 'pi-palette', title: 'Frontend Development', tags: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'React.js', 'Vue.js'] },
-  { icon: 'pi-server', title: 'Backend Development', tags: ['PHP', 'Laravel', 'Java', 'C#', 'Python', 'Node.js'] },
-  { icon: 'pi-mobile', title: 'Mobile Development', tags: ['Flutter', 'Dart', 'Android Studio', 'Firebase', 'REST APIs'] },
-  { icon: 'pi-database', title: 'Database Management', tags: ['MySQL', 'MariaDB', 'SQLite', 'Firebase', 'PostgreSQL'] }
-]
-
-const base = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons'
-const techIcons = [
-  { name: 'HTML5', src: `${base}/html5/html5-original.svg` },
-  { name: 'CSS3', src: `${base}/css3/css3-original.svg` },
-  { name: 'JavaScript', src: `${base}/javascript/javascript-original.svg` },
-  { name: 'PHP', src: `${base}/php/php-original.svg` },
-  { name: 'Laravel', src: `${base}/laravel/laravel-original.svg` },
-  { name: 'React', src: `${base}/react/react-original.svg` },
-  { name: 'Vue.js', src: `${base}/vuejs/vuejs-original.svg` },
-  { name: 'Flutter', src: `${base}/flutter/flutter-original.svg` },
-  { name: 'Java', src: `${base}/java/java-original.svg` },
-  { name: 'Python', src: `${base}/python/python-original.svg` },
-  { name: 'MySQL', src: `${base}/mysql/mysql-original.svg` },
-  { name: 'Firebase', src: `${base}/firebase/firebase-plain.svg` }
+  { icon: 'pi-folder', value: PROJECTS_DONE, label: 'Projects Completed' },
+  { icon: 'pi-code', value: technologyCount, label: 'Technologies Used' },
+  { icon: 'pi-trophy', value: CERTIFICATIONS, label: 'Certificates Earned' }
 ]
 
 const softSkills = [
@@ -115,7 +94,7 @@ onBeforeUnmount(() => {
             >
           </figure>
           <div class="exp-badge float">
-            <span class="exp-num">1+</span>
+            <span class="exp-num">{{ YEARS_EXPERIENCE }}+</span>
             <span class="exp-text">Years of<br>Experience</span>
           </div>
         </div>
@@ -178,22 +157,7 @@ onBeforeUnmount(() => {
           <p class="muted">A comprehensive toolkit of technologies I use to bring ideas to life</p>
         </div>
 
-        <div class="grid grid--4">
-          <article v-for="(g, i) in skillGroups" :key="g.title" v-reveal="i * 80" class="card-surface lift skill-card">
-            <span class="icon-badge"><i :class="['pi', g.icon]" aria-hidden="true" /></span>
-            <h3>{{ g.title }}</h3>
-            <ul class="chips">
-              <li v-for="t in g.tags" :key="t"><Tag :value="t" severity="secondary" /></li>
-            </ul>
-          </article>
-        </div>
-
-        <ul v-reveal class="tech-stack" aria-label="Technology logos">
-          <li v-for="t in techIcons" :key="t.name" class="tech-icon">
-            <img :src="t.src" :alt="t.name" width="40" height="40" loading="lazy">
-            <span>{{ t.name }}</span>
-          </li>
-        </ul>
+        <TechStack />
       </div>
     </section>
 
@@ -274,7 +238,7 @@ onBeforeUnmount(() => {
 .heading.center { margin-inline: auto; text-align: center; }
 .heading p { font-size: var(--fs-lg); }
 .eyebrow { margin-bottom: var(--space-3); }
-.plain, .chips, .highlights, .stats-list, .tech-stack, .edu-highlights, .interest-list { list-style: none; padding: 0; margin: 0; }
+.plain, .highlights, .stats-list, .edu-highlights, .interest-list { list-style: none; padding: 0; margin: 0; }
 
 /* Story */
 .story { display: grid; gap: var(--space-7); align-items: center; }
@@ -288,7 +252,7 @@ onBeforeUnmount(() => {
   padding: var(--space-3) var(--space-4); border-radius: var(--radius);
   background: var(--primary); color: var(--on-primary); box-shadow: var(--shadow);
 }
-.exp-num { font-family: var(--font-serif); font-size: var(--fs-2xl); font-weight: 700; line-height: 1; }
+.exp-num { font-family: var(--font-num); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.02em; font-size: var(--fs-2xl); font-weight: 700; line-height: 1; }
 .exp-text { font-size: var(--fs-sm); line-height: 1.3; font-weight: 600; }
 .story-content .stack { margin-bottom: var(--space-5); }
 .highlights { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-5); }
@@ -304,7 +268,7 @@ onBeforeUnmount(() => {
 :global(:root.app-dark) .stats { background: var(--surface); color: var(--text); }
 .stat { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-1); }
 .stat-icon { font-size: var(--fs-2xl); margin-bottom: var(--space-2); }
-.stat-num { font-family: var(--font-serif); font-size: var(--fs-4xl); font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat-num { font-family: var(--font-num); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.02em; font-size: var(--fs-4xl); font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .stat-label { font-size: var(--fs-lg); font-weight: 500; }
 
 /* Skills */
@@ -313,19 +277,7 @@ onBeforeUnmount(() => {
   width: 3rem; height: 3rem; border-radius: var(--radius-sm); font-size: 1.25rem;
   background: var(--surface-2); color: var(--primary); border: 1px solid var(--border);
 }
-.skill-card h3, .soft-card h3 { margin-top: var(--space-4); }
-.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-.tech-stack {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
-  gap: var(--space-4); margin-top: var(--space-7);
-}
-.tech-icon {
-  display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
-  padding: var(--space-4) var(--space-2); border-radius: var(--radius);
-  background: var(--surface); border: 1px solid var(--border);
-  font-size: var(--fs-sm); font-weight: 500;
-}
-.tech-icon img { width: 2.5rem; height: 2.5rem; }
+.soft-card h3 { margin-top: var(--space-4); }
 .soft-card p { margin: 0; }
 
 /* Education */

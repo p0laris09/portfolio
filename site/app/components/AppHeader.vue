@@ -47,10 +47,11 @@ const isActive = (to: string) => (to === '/' ? route.path === '/' : route.path.s
   min-height: var(--header-h);
   border: 0; border-bottom: 1px solid var(--border);
   background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(12px);
+  backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--text) 4%, transparent), 0 6px 20px color-mix(in srgb, var(--text) 5%, transparent);
   padding-inline: max(var(--space-4), calc((100vw - var(--container)) / 2));
 }
-.brand { font-family: var(--font-serif); font-size: 1.75rem; font-weight: 700; color: var(--text); text-decoration: none; margin-right: var(--space-4); }
+.brand { font-family: var(--font-sans); font-size: 1.75rem; font-weight: 800; letter-spacing: -0.04em; color: var(--text); text-decoration: none; margin-right: var(--space-4); }
 .brand span { color: var(--primary); }
 .nav-link { display: flex; align-items: center; padding: var(--space-2) var(--space-3); color: var(--text); text-decoration: none; border-radius: var(--radius-sm); font-weight: 500; }
 .nav-link:hover { color: var(--primary); }

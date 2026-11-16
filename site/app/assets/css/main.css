@@ -19,16 +19,16 @@
   --shadow: 0 8px 28px rgb(20 34 26 / 0.1);
 
   --font-sans: 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-num: var(--font-sans); /* stat numerals: Outfit lining figures, no old-style digits */
 
   --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
-  --space-5: 1.5rem; --space-6: 2rem; --space-7: 3rem; --space-8: 4.5rem; --space-9: 6rem;
+  --space-5: 1.5rem; --space-6: 2rem; --space-7: 3rem; --space-8: 5rem; --space-9: 7rem;
 
   --fs-sm: 0.875rem; --fs-base: 1rem; --fs-lg: 1.125rem;
-  --fs-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-xl: clamp(1.2rem, 1.1rem + 0.5vw, 1.4rem);
   --fs-2xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
-  --fs-3xl: clamp(1.9rem, 1.4rem + 2.2vw, 3rem);
-  --fs-4xl: clamp(2.4rem, 1.6rem + 4vw, 4.5rem);
+  --fs-3xl: clamp(1.9rem, 1.4rem + 2vw, 2.75rem);
+  --fs-4xl: clamp(2.5rem, 1.6rem + 3.8vw, 4.25rem);
 
   --radius: 14px;
   --radius-sm: 8px;
@@ -58,15 +58,16 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   font-size: var(--fs-base);
-  line-height: 1.65;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
   color: var(--text);
   background: var(--bg);
   transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
 }
-h1, h2, h3, h4 { font-family: var(--font-serif); line-height: 1.2; margin: 0 0 var(--space-4); color: var(--text); text-wrap: balance; }
-h1 { font-size: var(--fs-4xl); }
-h2 { font-size: var(--fs-3xl); }
-h3 { font-size: var(--fs-xl); }
+h1, h2, h3, h4 { font-family: var(--font-sans); font-weight: 700; line-height: 1.15; letter-spacing: -0.025em; margin: 0 0 var(--space-4); color: var(--text); text-wrap: balance; }
+h1 { font-size: var(--fs-4xl); font-weight: 800; letter-spacing: -0.035em; line-height: 1.08; }
+h2 { font-size: var(--fs-3xl); font-weight: 700; letter-spacing: -0.03em; line-height: 1.12; }
+h3 { font-size: var(--fs-xl); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; }
 p { margin: 0 0 var(--space-4); }
 img, svg { max-width: 100%; height: auto; }
 a { color: var(--primary); text-underline-offset: 3px; }
@@ -100,6 +101,8 @@ ul { padding-left: 1.25rem; }
   background: linear-gradient(120deg, var(--primary), var(--accent-gold));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
+/* Gradient text is only used in large headings (AA large needs 3:1); both stops are >=4.5:1 on --bg in both themes. */
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) { .gradient-text { color: var(--primary); background: none; } }
 .card-surface {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
   padding: var(--space-5); box-shadow: var(--shadow);
@@ -109,7 +112,7 @@ ul { padding-left: 1.25rem; }
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease) var(--reveal-delay, 0ms), transform 0.6s var(--ease) var(--reveal-delay, 0ms); }
 .reveal.reveal-in { opacity: 1; transform: none; }
 .lift { transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
-.lift:hover { transform: translateY(-4px); }
+.lift:hover { transform: translateY(-4px); box-shadow: 0 16px 40px color-mix(in srgb, var(--text) 16%, transparent); }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 .float { animation: float 6s ease-in-out infinite; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 50%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }

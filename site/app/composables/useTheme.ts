@@ -1,40 +1,35 @@
-export type ThemeMode = 'system' | 'light' | 'dark'
+export type ThemeMode = 'light' | 'dark'
 const KEY = 'theme'
 
-/** system (default) follows prefers-color-scheme; light/dark override it and persist in localStorage. */
+/**
+ * Two-state theme. First visit follows the OS preference; one click flips light/dark
+ * and the choice is saved in localStorage. (The inline head script in nuxt.config.ts
+ * applies the same rule before first paint to avoid a flash.)
+ */
 export function useTheme() {
-  const mode = useState<ThemeMode>('theme-mode', () => 'system')
-  const isDark = useState<boolean>('theme-is-dark', () => false)
+  const mode = useState<ThemeMode>('theme-mode', () => 'light')
 
   function apply() {
     if (!import.meta.client) return
-    const dark = mode.value === 'dark' || (mode.value === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    isDark.value = dark
+    const dark = mode.value === 'dark'
     document.documentElement.classList.toggle('app-dark', dark)
     document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
   }
 
   function init() {
-    try {
-      const s = localStorage.getItem(KEY)
-      mode.value = s === 'light' || s === 'dark' ? s : 'system'
-    } catch { mode.value = 'system' }
-    apply()
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (mode.value === 'system') apply() })
-  }
-
-  function setMode(m: ThemeMode) {
-    mode.value = m
-    try {
-      if (m === 'system') localStorage.removeItem(KEY)
-      else localStorage.setItem(KEY, m)
-    } catch { /* storage unavailable */ }
+    let saved: string | null = null
+    try { saved = localStorage.getItem(KEY) } catch { /* storage unavailable */ }
+    mode.value = saved === 'light' || saved === 'dark'
+      ? saved
+      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
     apply()
   }
 
-  function cycle() {
-    setMode(mode.value === 'system' ? 'light' : mode.value === 'light' ? 'dark' : 'system')
+  function toggle() {
+    mode.value = mode.value === 'dark' ? 'light' : 'dark'
+    try { localStorage.setItem(KEY, mode.value) } catch { /* storage unavailable */ }
+    apply()
   }
 
-  return { mode, isDark, init, setMode, cycle }
+  return { mode, init, toggle }
 }

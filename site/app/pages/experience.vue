@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { YEARS_EXPERIENCE } from '~/data/profile'
+
 usePageSeo(
   'Experience - Anne Lorraine Ramos',
   'A timeline of my professional growth and contributions in the tech industry: IT Intern at ORTADEL Technologies Corporation and Backend Developer at Barangay 781 Zone 85.'
@@ -7,7 +9,7 @@ usePageSeo(
 const stats = [
   { icon: 'pi-briefcase', num: '2+', label: 'Work Experiences' },
   { icon: 'pi-building', num: '2', label: 'Companies' },
-  { icon: 'pi-calendar', num: '1+', label: 'Years Experience' },
+  { icon: 'pi-calendar', num: `${YEARS_EXPERIENCE}+`, label: 'Years Experience' },
   { icon: 'pi-globe', num: '5+', label: 'Projects Delivered' }
 ]
 
@@ -172,7 +174,7 @@ const logoFailed = reactive<Record<string, boolean>>({})
   display: inline-grid; place-items: center; flex: none; width: 3rem; height: 3rem; border-radius: var(--radius-sm);
   background: var(--surface-2); color: var(--primary); font-size: 1.25rem;
 }
-.stat-num { display: block; font-family: var(--font-serif); font-size: var(--fs-2xl); font-weight: 700; line-height: 1.1; color: var(--text); }
+.stat-num { display: block; font-family: var(--font-num); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.02em; font-size: var(--fs-2xl); font-weight: 700; line-height: 1.1; color: var(--text); }
 .stat-label { display: block; font-size: var(--fs-sm); }
 
 .exp-timeline { --gap: var(--space-5); }

@@ -427,7 +427,7 @@
         <div class="footer-contact">
           <h5>Get In Touch</h5>
           <ul>
-            <li><i class="bi bi-envelope"></i> annelorraineramos@gmail.com</li>
+            <li><i class="bi bi-envelope"></i> annelorraineframos@gmail.com</li>
             <li><i class="bi bi-telephone"></i> +63 (946) 542-0123</li>
             <li><i class="bi bi-geo-alt"></i> Philippines</li>
           </ul>

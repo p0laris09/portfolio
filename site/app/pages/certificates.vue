@@ -311,12 +311,13 @@ const learning = [
   flex: none; display: inline-grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%;
   background: var(--surface-2); color: var(--primary); font-size: var(--fs-lg);
 }
-.stat-num { display: block; font-family: var(--font-serif); font-size: var(--fs-2xl); font-weight: 700; line-height: 1.1; color: var(--text); }
+.stat-num { display: block; font-family: var(--font-num); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.02em; font-size: var(--fs-2xl); font-weight: 700; line-height: 1.1; color: var(--text); }
 .stat-label { display: block; font-size: var(--fs-sm); }
 
 .edu { display: grid; gap: var(--space-5); align-items: center; }
 .degree { display: flex; flex-direction: column; gap: var(--space-4); }
 .degree-badge {
+  flex: none;
   display: inline-grid; place-items: center; width: 3.5rem; height: 3.5rem; border-radius: var(--radius-sm);
   background: var(--primary); color: var(--on-primary); font-size: var(--fs-xl);
 }

@@ -1,63 +1,75 @@
 <script setup lang="ts">
+import { heroRoles, YEARS_EXPERIENCE, PROJECTS_DONE, CERTIFICATIONS } from '~/data/profile'
+
 usePageSeo(
   'Anne Lorraine Ramos - Full Stack Developer',
   'Anne Lorraine Ramos is a passionate Full Stack Developer based in Manila, Philippines, creating responsive web applications and mobile apps with exceptional user experiences.'
 )
 
 const NuxtLink = resolveComponent('NuxtLink')
+const projectUrl = useProjectUrl()
 const CV = '/assets/RAMOS_ANNE LORRAINE F._CV.pdf'
 
-// Hero typing roles (same strings as the PHP page)
-const roles = ['Full Stack Developer', 'Mobile Developer', 'UI/UX Enthusiast', 'Problem Solver']
+const roles = heroRoles
 const roleText = ref(roles[0] as string)
 const typing = ref(false)
 
 const socials = [
   { label: 'GitHub', href: 'https://github.com/p0laris09', icon: 'pi-github', external: true },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/anne-lorraine-ramos-596b5b330/', icon: 'pi-linkedin', external: true },
-  { label: 'Email', href: 'mailto:annelorraineramos@gmail.com', icon: 'pi-envelope', external: false }
+  { label: 'Email', href: 'mailto:annelorraineframos@gmail.com', icon: 'pi-envelope', external: false }
 ]
 
 const stats = [
-  { icon: 'pi-briefcase', target: 2, label: 'Years Experience' },
-  { icon: 'pi-folder-open', target: 10, label: 'Projects Done' },
-  { icon: 'pi-verified', target: 5, label: 'Certifications' }
+  { icon: 'pi-briefcase', target: YEARS_EXPERIENCE, label: 'Years Experience' },
+  { icon: 'pi-folder-open', target: PROJECTS_DONE, label: 'Projects Done' },
+  { icon: 'pi-verified', target: CERTIFICATIONS, label: 'Certifications' }
 ]
 const statValues = ref<string[]>(stats.map(s => `${s.target}+`))
 const statsEl = ref<HTMLElement | null>(null)
-
-const skills = [
-  { icon: 'pi-palette', title: 'Frontend', tags: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Bootstrap', 'Tailwind'] },
-  { icon: 'pi-server', title: 'Backend', tags: ['PHP', 'Node.js', 'Laravel', 'Express', 'REST API'] },
-  { icon: 'pi-mobile', title: 'Mobile', tags: ['Flutter', 'Dart', 'React Native', 'Android Studio'] },
-  { icon: 'pi-database', title: 'Database & Tools', tags: ['MySQL', 'MongoDB', 'Firebase', 'Git', 'Figma'] }
-]
 
 const projects = [
   {
     title: 'Ravel Solutions',
     desc: 'A comprehensive job search platform connecting job seekers with employers.',
-    tags: ['PHP', 'MySQL', 'Bootstrap'],
+    tags: ['Laravel', 'Vue.js', 'MySQL'],
     url: 'ravelsolutions.com',
     icon: 'pi-desktop',
     demo: '/projects/ravel/index.php',
-    github: 'https://github.com/p0laris09/Ravel'
+    github: 'https://github.com/p0laris09/Ravel',
+    study: {
+      problem: 'Job seekers and employers need one place to post openings, apply and track applications.',
+      role: 'Full Stack Developer',
+      outcome: 'Built separate applicant, contractor and admin dashboards with job listings, job details and application tracking using Laravel, Vue and MySQL.'
+    }
   },
   {
     title: 'Lifeline',
     desc: 'Emergency response app with real-time alerts and quick access to help.',
     tags: ['Flutter', 'Firebase', 'Dart'],
     icon: 'pi-mobile',
-    gallery: '/projects#lifeline'
+    image: { src: '/assets/Lifeline/13_Container-5.png', alt: 'Lifeline app home screen showing health overview, daily medications and upcoming appointments', width: 406, height: 1204 },
+    gallery: '/projects#lifeline',
+    study: {
+      problem: 'People in an emergency need to ask for help quickly and let others know where they are.',
+      role: 'Full Stack Developer',
+      outcome: 'A personal project still in active development: a Flutter and Firebase app that I am building end to end.'
+    }
   },
   {
     title: 'Mellow',
     desc: 'Smart task management with intelligent reminders and automation.',
-    tags: ['React', 'Node.js', 'MongoDB'],
+    tags: ['React', 'Node.js', 'Flutter', 'Dart', 'Firebase'],
     url: 'mellow.app',
     icon: 'pi-check-circle',
+    image: { src: '/assets/Mellow/14_Dashboard.png', alt: 'Mellow dashboard showing task analytics, recent spaces and task list', width: 618, height: 1353 },
     demo: '/projects/mellow/index.html',
-    github: 'https://github.com/p0laris09/mellow-admin'
+    github: 'https://github.com/p0laris09/mellow-admin',
+    study: {
+      problem: 'Students need a single place to organise tasks, goals and shared work.',
+      role: 'Full Stack Developer',
+      outcome: 'Built a task manager with personal and shared tasks, task history, scheduling and an analytics dashboard.'
+    }
   }
 ]
 
@@ -151,6 +163,9 @@ onBeforeUnmount(() => {
           <p v-reveal="120" class="role">
             <span class="role-text">{{ roleText }}</span><span v-if="typing" class="cursor" aria-hidden="true">|</span>
           </p>
+          <p v-reveal="140" class="positioning">
+            I build full-stack apps, cloud deployments and AI tools, from API to production.
+          </p>
           <p v-reveal="160" class="muted lead">
             I design and build beautiful digital products that solve real problems.
             Passionate about creating seamless user experiences through clean code
@@ -177,6 +192,7 @@ onBeforeUnmount(() => {
         </div>
 
         <div v-reveal="120" class="hero-visual">
+          <div class="frame-glow" aria-hidden="true" />
           <figure class="profile-frame">
             <img
               src="/images/girl-in-phone.png"
@@ -188,11 +204,11 @@ onBeforeUnmount(() => {
           </figure>
           <div class="chip chip-top float">
             <i class="pi pi-code" aria-hidden="true" />
-            <div><strong>10+</strong><span>Projects</span></div>
+            <div><strong>{{ PROJECTS_DONE }}+</strong><span>Projects</span></div>
           </div>
           <div class="chip chip-bottom float">
             <i class="pi pi-mobile" aria-hidden="true" />
-            <div><strong>Mobile</strong><span>&amp; Web Dev</span></div>
+            <div><strong>Cloud &amp; AI</strong><span>Docker · AWS · Ollama</span></div>
           </div>
         </div>
       </div>
@@ -212,7 +228,7 @@ onBeforeUnmount(() => {
             >
           </figure>
           <div class="exp-badge">
-            <span class="exp-num">2+</span>
+            <span class="exp-num">{{ YEARS_EXPERIENCE }}+</span>
             <span>Years<br>Experience</span>
           </div>
         </div>
@@ -255,23 +271,9 @@ onBeforeUnmount(() => {
         <div v-reveal class="heading center">
           <Tag value="What I Do" severity="secondary" rounded />
           <h2 id="skills-title">My <span class="gradient-text">Tech Stack</span></h2>
-          <p class="muted lead">Technologies I use to bring ideas to life</p>
+          <p class="muted lead">From interface to API to cloud deployment, plus self-hosted AI</p>
         </div>
-        <ul class="grid grid--4 plain">
-          <li v-for="(sk, i) in skills" :key="sk.title" v-reveal="i * 80">
-            <Card class="lift full">
-              <template #content>
-                <div class="stack">
-                  <span class="icon-badge"><i :class="`pi ${sk.icon}`" aria-hidden="true" /></span>
-                  <h3>{{ sk.title }}</h3>
-                  <ul class="cluster plain tags">
-                    <li v-for="t in sk.tags" :key="t"><Tag :value="t" severity="secondary" /></li>
-                  </ul>
-                </div>
-              </template>
-            </Card>
-          </li>
-        </ul>
+        <TechStack />
       </div>
     </section>
 
@@ -289,9 +291,20 @@ onBeforeUnmount(() => {
           <li v-for="(p, i) in projects" :key="p.title" v-reveal="i * 100">
             <Card class="lift full project">
               <template #header>
-                <div class="preview" aria-hidden="true">
-                  <div v-if="p.url" class="browser-bar"><span class="dots"><i /><i /><i /></span><span class="url">{{ p.url }}</span></div>
-                  <i :class="`pi ${p.icon} preview-icon`" />
+                <div class="preview" :aria-hidden="p.image ? undefined : 'true'">
+                  <div v-if="p.url" class="browser-bar" aria-hidden="true"><span class="dots"><i /><i /><i /></span><span class="url">{{ p.url }}</span></div>
+                  <img
+                    v-if="p.image"
+                    class="preview-img"
+                    :class="{ 'has-bar': p.url }"
+                    :src="p.image.src"
+                    :alt="p.image.alt"
+                    :width="p.image.width"
+                    :height="p.image.height"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <i v-else :class="`pi ${p.icon} preview-icon`" aria-hidden="true" />
                 </div>
               </template>
               <template #content>
@@ -301,6 +314,20 @@ onBeforeUnmount(() => {
                   </ul>
                   <h3>{{ p.title }}</h3>
                   <p class="muted">{{ p.desc }}</p>
+                  <dl class="study">
+                    <div>
+                      <dt>Problem</dt>
+                      <dd>{{ p.study.problem }}</dd>
+                    </div>
+                    <div v-if="p.study.role">
+                      <dt>My role</dt>
+                      <dd>{{ p.study.role }}</dd>
+                    </div>
+                    <div>
+                      <dt>Outcome</dt>
+                      <dd>{{ p.study.outcome }}</dd>
+                    </div>
+                  </dl>
                 </div>
               </template>
               <template #footer>
@@ -308,7 +335,7 @@ onBeforeUnmount(() => {
                   <Button
                     v-if="p.demo"
                     as="a"
-                    :href="p.demo"
+                    :href="projectUrl(p.demo)"
                     target="_blank"
                     rel="noopener"
                     :aria-label="`Open ${p.title} demo`"
@@ -396,7 +423,21 @@ onBeforeUnmount(() => {
 .tags { gap: var(--space-2); }
 
 /* Hero */
-.hero { padding-block: var(--space-7) var(--space-8); overflow: hidden; }
+.hero {
+  position: relative; padding-block: var(--space-7) var(--space-8); overflow: hidden; isolation: isolate;
+  background:
+    radial-gradient(60rem 32rem at 85% 10%, color-mix(in srgb, var(--primary) 16%, transparent), transparent 70%),
+    radial-gradient(40rem 26rem at 0% 100%, color-mix(in srgb, var(--accent-gold) 9%, transparent), transparent 70%);
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 70% 30%, #000 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 70% 30%, #000 0%, transparent 70%);
+}
 .hero-grid { display: grid; gap: var(--space-7); align-items: center; }
 @media (min-width: 992px) {
   .hero-grid { grid-template-columns: 7fr 5fr; }
@@ -413,17 +454,24 @@ onBeforeUnmount(() => {
 .role { font-size: var(--fs-xl); font-weight: 600; color: var(--primary); min-height: 1.7em; margin: 0; }
 .cursor { margin-left: 2px; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
+.positioning { font-size: var(--fs-lg); font-weight: 500; color: var(--text); max-width: 36rem; margin: 0; }
 .lead { font-size: var(--fs-lg); max-width: 38rem; }
 .socials { display: flex; gap: var(--space-2); list-style: none; padding: 0; }
 
 .hero-visual { position: relative; max-width: 26rem; margin-inline: auto; width: 100%; padding: var(--space-4); }
 .profile-frame {
-  margin: 0; border-radius: 50% 50% var(--radius) var(--radius); overflow: hidden; aspect-ratio: 1;
-  background: var(--surface-2); border: 3px solid var(--border); box-shadow: var(--shadow);
+  position: relative; margin: 0; border-radius: 2rem; overflow: hidden; aspect-ratio: 1;
+  background: var(--surface-2); border: 1px solid var(--border); box-shadow: var(--shadow);
+  outline: 6px solid color-mix(in srgb, var(--primary) 18%, transparent); outline-offset: 6px;
 }
+.frame-glow {
+  position: absolute; inset: 10% 6% 6%; border-radius: 2rem; z-index: 0; pointer-events: none;
+  background: color-mix(in srgb, var(--primary) 35%, transparent); filter: blur(48px);
+}
+.profile-frame { z-index: 1; }
 .profile-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .chip {
-  position: absolute; display: flex; align-items: center; gap: var(--space-3);
+  position: absolute; z-index: 2; display: flex; align-items: center; gap: var(--space-3);
   padding: var(--space-2) var(--space-4); border-radius: var(--radius);
   background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow); color: var(--text);
 }
@@ -444,13 +492,13 @@ onBeforeUnmount(() => {
   padding: var(--space-3) var(--space-4); border-radius: var(--radius);
   background: var(--primary); color: var(--on-primary); font-size: var(--fs-sm); line-height: 1.3; box-shadow: var(--shadow);
 }
-.exp-num { font-family: var(--font-serif); font-size: var(--fs-2xl); font-weight: 700; }
+.exp-num { font-family: var(--font-num); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.02em; font-size: var(--fs-2xl); font-weight: 700; }
 
 /* Stats */
 .stats { padding-block: var(--space-7); }
 .stat { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-1); }
 .stat i { font-size: 1.5rem; color: var(--primary); }
-.stat-num { font-family: var(--font-serif); font-size: var(--fs-3xl); font-weight: 700; color: var(--text); line-height: 1.1; }
+.stat-num { font-family: var(--font-num); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.02em; font-size: var(--fs-3xl); font-weight: 800; color: var(--text); line-height: 1.1; }
 
 /* Headings */
 .heading { margin-bottom: var(--space-6); }
@@ -472,6 +520,8 @@ onBeforeUnmount(() => {
   border-radius: var(--radius) var(--radius) 0 0;
 }
 .preview-icon { font-size: 3rem; color: var(--primary); }
+.preview-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.preview-img.has-bar { padding-top: 2.25rem; box-sizing: border-box; }
 .browser-bar {
   position: absolute; inset: 0 0 auto 0; display: flex; align-items: center; gap: var(--space-3);
   padding: var(--space-2) var(--space-3); background: var(--surface); border-bottom: 1px solid var(--border);
@@ -479,6 +529,10 @@ onBeforeUnmount(() => {
 }
 .dots { display: inline-flex; gap: 4px; }
 .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--border); display: block; }
+
+.study { margin: 0; padding-top: var(--space-3); border-top: 1px solid var(--border); display: grid; gap: var(--space-3); }
+.study dt { font-size: var(--fs-sm); font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.04em; }
+.study dd { margin: 0; font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.5; }
 
 /* Experience */
 .jobs :deep(.p-timeline-event-opposite) { flex: 0; padding: 0; display: none; }
