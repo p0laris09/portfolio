@@ -58,7 +58,7 @@
           <div class="hero-content">
             <div class="hero-badge">
               <span class="pulse-dot"></span>
-              Open to work
+              Open for projects
             </div>
             <h1 class="hero-title">
               Hello, I'm<br>
@@ -86,7 +86,7 @@
                   class="bi bi-github"></i></a>
               <a href="https://www.linkedin.com/in/anne-lorraine-ramos-596b5b330/" aria-label="LinkedIn"
                 target="_blank"><i class="bi bi-linkedin"></i></a>
-              <a href="mailto:annelorraineramos@gmail.com" aria-label="Email"><i class="bi bi-envelope"></i></a>
+              <a href="mailto:annelorraineframos@gmail.com" aria-label="Email"><i class="bi bi-envelope"></i></a>
             </div>
           </div>
         </div>
@@ -461,7 +461,7 @@
         <div class="footer-contact">
           <h5>Get In Touch</h5>
           <ul>
-            <li><i class="bi bi-envelope"></i> annelorraineramos@gmail.com</li>
+            <li><i class="bi bi-envelope"></i> annelorraineframos@gmail.com</li>
             <li><i class="bi bi-phone"></i> +63 (946) 542-0123</li>
             <li><i class="bi bi-geo-alt"></i> Manila, Philippines</li>
           </ul>

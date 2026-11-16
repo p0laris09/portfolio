@@ -1,0 +1,4 @@
+{
+  // Lets the editor (Volar) see Nuxt auto-imports such as ref, usePageSeo and resolveComponent.
+  "extends": "./.nuxt/tsconfig.json"
+}

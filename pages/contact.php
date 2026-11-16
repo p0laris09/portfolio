@@ -69,12 +69,12 @@
   <section class="contact-info-section">
     <div class="container">
       <div class="contact-info-grid">
-        <a href="mailto:annelorraineramos@gmail.com" class="contact-info-card">
+        <a href="mailto:annelorraineframos@gmail.com" class="contact-info-card">
           <div class="contact-info-icon">
             <i class="bi bi-envelope"></i>
           </div>
           <h4>Email</h4>
-          <p>annelorraineramos@gmail.com</p>
+          <p>annelorraineframos@gmail.com</p>
           <span class="contact-info-action">Send Email <i class="bi bi-arrow-right"></i></span>
         </a>
         <a href="tel:+639466470371" class="contact-info-card">
@@ -113,7 +113,7 @@
               </p>
             </div>
 
-            <form class="forest-contact-form" action="mailto:annelorraineramos@gmail.com" method="POST"
+            <form class="forest-contact-form" action="mailto:annelorraineframos@gmail.com" method="POST"
               enctype="text/plain">
               <div class="row g-4">
                 <div class="col-md-6">
@@ -293,7 +293,7 @@
         <div class="footer-contact">
           <h5>Get In Touch</h5>
           <ul>
-            <li><i class="bi bi-envelope"></i> annelorraineramos@gmail.com</li>
+            <li><i class="bi bi-envelope"></i> annelorraineframos@gmail.com</li>
             <li><i class="bi bi-phone"></i> +63 (946) 542-0123</li>
             <li><i class="bi bi-geo-alt"></i> Manila, Philippines</li>
           </ul>
