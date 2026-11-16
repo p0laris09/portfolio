@@ -123,3 +123,10 @@ ul { padding-left: 1.25rem; }
 /* PrimeVue tweaks */
 .p-menubar { border-radius: 0; }
 .p-button { font-family: var(--font-sans); font-weight: 600; }
+a.p-button, a.p-button:hover { text-decoration: none; }
+
+/* AA fix: Aura's secondary outlined/text buttons use surface.500 (4.06-4.43:1 on light). Use the muted token (6.7:1 / 8.6:1). */
+.p-button.p-button-secondary.p-button-outlined,
+.p-button.p-button-secondary.p-button-text { color: var(--text-muted); }
+.p-button.p-button-secondary.p-button-outlined:hover,
+.p-button.p-button-secondary.p-button-text:hover { color: var(--text); }
