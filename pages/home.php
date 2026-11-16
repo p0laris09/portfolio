@@ -58,7 +58,7 @@
           <div class="hero-content">
             <div class="hero-badge">
               <span class="pulse-dot"></span>
-              Open to work
+              Open for projects
             </div>
             <h1 class="hero-title">
               Hello, I'm<br>

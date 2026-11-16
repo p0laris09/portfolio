@@ -143,7 +143,7 @@ onBeforeUnmount(() => {
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero-grid">
         <div class="hero-content">
-          <p v-reveal class="badge"><span class="pulse-dot" aria-hidden="true" /> Open to work</p>
+          <p v-reveal class="badge"><span class="pulse-dot" aria-hidden="true" /> Open for projects</p>
           <h1 id="hero-title" v-reveal="80">
             Hello, I'm<br>
             <span class="gradient-text">Anne Lorraine</span>
